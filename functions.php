@@ -120,17 +120,39 @@ add_action( 'widgets_init', 'wordpresslearning_widgets_init' );
  * Enqueue scripts and styles.
  */
 function wordpresslearning_scripts() {
+
+	// ========== styles ==========
+	wp_enqueue_style( 'bootstrap-styles', get_template_directory_uri() . '/css/bootstrap.min.css');
+
+	wp_enqueue_style( 'bootstrap-theme-styles', get_template_directory_uri() . '/css/bootstrap-theme.min.css');
+
+	wp_enqueue_style( 'font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
+
 	wp_enqueue_style( 'wordpresslearning-style', get_stylesheet_uri() );
+
+
+	// ========== scripts ==========
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/vendor/bootstrap.min.js', array() , '3.3.7', true );
 
 	wp_enqueue_script( 'wordpresslearning-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'wordpresslearning-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array('jquery') , '1.0.0', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'wordpresslearning_scripts' );
+
+/**
+ * ONLY load scripts on specific pages
+ */
+
+function load_about_scripts() {
+		wp_enqueue_script( 'about', get_template_directory_uri() . '/js/pages/about.js', array('jquery') , '1.0.0', true );
+}
 
 /**
  * Implement the Custom Header feature.
@@ -158,4 +180,3 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
